@@ -12,7 +12,7 @@
 /**
  * NavigationGraphNode
  */
-@interface NavigationGraphNode : ZJGraphNode {
+@interface NavigationGraphNode : GraphNode {
     @public
     CGPoint position_;
 }
