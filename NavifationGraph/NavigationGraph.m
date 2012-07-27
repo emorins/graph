@@ -16,9 +16,8 @@
 @synthesize spacePartitioningInterval = spacePartitioningInterval_,
             spacePartitioningNodes    = spacePartitioningNodes_;
 
+#pragma mark - init
 
-#pragma mark -
-#pragma mark init
 - (id)init {
     if ((self = [super init])) {
         self.spacePartitioningInterval = 100;
@@ -27,9 +26,8 @@
     return (self);
 }
 
+#pragma mark - static method
 
-#pragma mark -
-#pragma mark static method
 + (NavigationGraph *)CreateNavigationGraphWithFloodFill:(CGPoint)startPoint receiver:(id)receiver selector:(SEL)selecter diagonal:(int)diagonal {
     NavigationGraph *graph = [[[NavigationGraph alloc] init] autorelease];
     float           height = floor((diagonal / 2) * tan([Math degreesToRadian:(TILE_DEGREES)]));
@@ -66,7 +64,7 @@
         while (ii < 16) {
             point1 = CGPointMake(node.position.x + around[ii], node.position.y + around[ii + 1]);
             if ([receiver performSelector:selecter withObject:[NSValue valueWithCGPoint:point1]]) {
-                NavigationGraphNode *n_ = [graph searchWithPoint:point1];
+                NavigationGraphNode *n_ = [graph nodeByPoint:point1];
                 if (n_ == nil) {
                     childNode = [self searchNavigationGraphNode:stack point:point1];
                     if (childNode == nil) {
@@ -112,16 +110,14 @@
 	return 100;
 }
 
+#pragma mark - dealloc
 
-#pragma mark -
-#pragma mark dealloc
 - (void)dealloc {
     [super dealloc];
 }
 
+#pragma mark - node
 
-#pragma mark -
-#pragma mark node
 - (NavigationGraphNode *)createNode {
     NavigationGraphNode *node = [[[NavigationGraphNode alloc] init] autorelease];
 
@@ -129,19 +125,11 @@
     return (node);
 }
 
-- (NavigationGraphNode *)getNode:(int)nodeId {
+- (NavigationGraphNode *)nodeById:(int)nodeId {
     return ([nodes_ objectForKey:[[NSNumber numberWithUnsignedInt:nodeId] stringValue]]);
 }
 
-- (void)addNode:(NavigationGraphNode *)node {
-    [nodes_ setValue:node forKey:[[NSNumber numberWithUnsignedInt:[node id]] stringValue]];
-}
-
-- (void)removeNode:(NavigationGraphNode *)node {
-    [nodes_ removeObjectForKey:[[NSNumber numberWithUnsignedInt:[node id]] stringValue]];
-}
-
-- (NavigationGraphNode *)searchWithPoint:(CGPoint)point {
+- (NavigationGraphNode *)nodeByPoint:(CGPoint)point {
     for (id key in nodes_) {
         NavigationGraphNode *node = [nodes_ objectForKey:key];
         if (point.x == [node position].x && point.y == [node position].y) {
@@ -153,7 +141,7 @@
 
 - (NavigationGraphNode *)nearestNode:(CGPoint)point {
     NavigationGraphNode *nearestNode = nil;
-
+    
     for (id key in nodes_) {
         NavigationGraphNode *node = [nodes_ objectForKey:key];
         if (nearestNode == nil ||
@@ -163,6 +151,14 @@
         }
     }
     return (nearestNode);
+}
+
+- (void)addNode:(NavigationGraphNode *)node {
+    [nodes_ setValue:node forKey:[[NSNumber numberWithUnsignedInt:[node id]] stringValue]];
+}
+
+- (void)removeNode:(NavigationGraphNode *)node {
+    [nodes_ removeObjectForKey:[[NSNumber numberWithUnsignedInt:[node id]] stringValue]];
 }
 
 @end

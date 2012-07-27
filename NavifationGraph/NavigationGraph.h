@@ -9,7 +9,6 @@
 #import "Graph.h"
 #import "NavigationGraphNode.h"
 
-
 /**
  * NavigationGraph
  */
@@ -29,9 +28,8 @@
  */
 @property int spacePartitioningInterval;
 
+#pragma mark - static method
 
-#pragma mark -
-#pragma mark static method
 /**
  * CreateNavigationGraphWithFloodFill
  * @param startPoint
@@ -41,9 +39,9 @@
  * @returns NavigationGraph
  */
 + (NavigationGraph *)CreateNavigationGraphWithFloodFill:(CGPoint)startPoint
-   receiver:(id)receiver
-   selector:(SEL)selecter
-   diagonal:(int)diagonal;
+                                               receiver:(id)receiver
+                                               selector:(SEL)selecter
+                                               diagonal:(int)diagonal;
 
 /**
  * searchNavigationGraphNode
@@ -55,9 +53,8 @@
  */
 + (int)getDiagonal;
 
+#pragma mark - node
 
-#pragma mark -
-#pragma mark node
 /**
  * createNode
  * @returns NavigationGraphNode
@@ -69,7 +66,21 @@
  * @param nodeId
  * @returns NavigationGraphNode
  */
-- (NavigationGraphNode *)getNode:(int)nodeId;
+- (NavigationGraphNode *)nodeById:(int)nodeId;
+
+/**
+ * searchWithPoint
+ * @param point
+ * @returns node
+ */
+- (NavigationGraphNode *)nodeByPoint:(CGPoint)point;
+
+/**
+ * nearestNode
+ * @param point
+ * @returns node
+ */
+- (NavigationGraphNode *)nearestNode:(CGPoint)point;
 
 /**
  * addNode
@@ -82,19 +93,5 @@
  * @param NavigationGraphNode
  */
 - (void)removeNode:(NavigationGraphNode *)node;
-
-/**
- * searchWithPoint
- * @param point
- * @returns node
- */
-- (id)searchWithPoint:(CGPoint)point;
-
-/**
- * nearestNode
- * @param point
- * @returns node
- */
-- (NavigationGraphNode *)nearestNode:(CGPoint)point;
 
 @end

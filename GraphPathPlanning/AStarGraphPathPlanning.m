@@ -41,7 +41,7 @@
     [[graph getNode:goalNodeId] setIsActive:YES];
     
     //開始ノード
-    AStarGraphPathPlanningNode *planningNode = [AStarGraphPathPlanningNode node:[graph getNode:startNodeId] parentPlanningNode:nil];
+    AStarGraphPathPlanningNode *planningNode = [AStarGraphPathPlanningNode node:[graph nodeById:startNodeId] parentPlanningNode:nil];
 
     //始点からの推定最小コストを計算
     int                        gs     = 0;
@@ -57,8 +57,8 @@
     [planningNode setGs:gs];
 
     //終点までの推定最小コストを計算
-    CGPoint nowPoint  = [[graph getNode:startNodeId] position];
-    CGPoint goalPoint = [[graph getNode:goalNodeId] position];
+    CGPoint nowPoint  = [[graph nodeById:startNodeId] position];
+    CGPoint goalPoint = [[graph nodeById:goalNodeId] position];
     [planningNode setHs:abs(goalPoint.x - nowPoint.x) + abs(goalPoint.y - nowPoint.y)];
 
     //開始ノードをopenListにpush
@@ -96,7 +96,7 @@
 
         //隣接ノードを探索
         for (id key in [[nowNode node] adjacentNodes]) {
-            NavigationGraphNode *adjacentNode = [graph getNode:[key intValue]];
+            NavigationGraphNode *adjacentNode = [graph nodeById:[key intValue]];
             if ([openList objectForKey:[[NSNumber numberWithUnsignedInt:[adjacentNode id]] stringValue]] == nil &&
                 [closeList objectForKey:[[NSNumber numberWithUnsignedInt:[adjacentNode id]] stringValue]] == nil &&
                 [adjacentNode isActive] == YES) {
@@ -118,7 +118,7 @@
 
                 //終点までの推定最小コストを計算
                 CGPoint nowPoint  = [[planningNode node] position];
-                CGPoint goalPoint = [[graph getNode:goalNodeId] position];
+                CGPoint goalPoint = [[graph nodeById:goalNodeId] position];
                 [planningNode setHs:abs(goalPoint.x - nowPoint.x) + abs(goalPoint.y - nowPoint.y)];
 
                 //開始ノードをopenListにpush

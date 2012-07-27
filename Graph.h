@@ -8,7 +8,6 @@
 
 #import "GraphNode.h"
 
-
 /**
  * Graph
  */
@@ -24,9 +23,8 @@
  */
 @property (retain, readwrite) NSMutableDictionary *nodes;
 
+#pragma mark - node
 
-#pragma mark -
-#pragma mark ノード
 /**
  * createNode
  * @returns GraphNode

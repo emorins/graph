@@ -9,14 +9,12 @@
 #import "Graph.h"
 #import "GraphNode.h"
 
-
 @implementation Graph
 
 @synthesize nodes = nodes_;
 
+#pragma mark - init
 
-#pragma mark -
-#pragma mark init
 - (id)init {
     if ((self = [super init])) {
         [self setNodes:[NSMutableDictionary dictionary]];
@@ -25,16 +23,14 @@
     return (self);
 }
 
+#pragma mark -  dealloc
 
-#pragma mark -
-#pragma mark dealloc
 - (void)dealloc {
     [super dealloc];
 }
 
+#pragma mark - public method
 
-#pragma mark -
-#pragma mark public method
 - (GraphNode *)createNode {
     GraphNode *node = [[[GraphNode alloc] init] autorelease];
 
@@ -58,7 +54,7 @@
     return ([nodes_ count]);
 }
 
--(NSArray *)activeNodes {
+- (NSArray *)activeNodes {
 	NSMutableArray *arr = [NSMutableArray array];
 	for (id key in nodes_) {
 		id node = [nodes_ objectForKey:key];
